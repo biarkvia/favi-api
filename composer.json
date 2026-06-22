@@ -1,4 +1,6 @@
 {
+    "name": "viachaslau-biarko/favi-api",
+    "description": "Partner order API for FAVI test assignment",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",

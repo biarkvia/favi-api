@@ -61,8 +61,9 @@ Success response:
 
 ```json
 {
-  "status": "success",
-  "id": 1
+  "id": 1,
+  "partner_id": "nabytek-24",
+  "order_id": "OBJ-20260612-8457"
 }
 ```
 
@@ -88,7 +89,6 @@ Success response:
 
 ```json
 {
-  "status": "success",
   "partner_id": "nabytek-24",
   "order_id": "OBJ-20260612-8457",
   "expected_delivery_date": "2026-06-28"
@@ -110,6 +110,13 @@ Possible responses:
 - Authentication is not implemented, as requested in the assignment.
 
 ## Tests
+
+Domain tests cover basic order rules:
+
+- order must contain at least one product;
+- delivery date can be changed;
+- item quantity must be positive;
+- order exceptions contain partner and order ID.
 
 Integration tests cover the main order API flow:
 

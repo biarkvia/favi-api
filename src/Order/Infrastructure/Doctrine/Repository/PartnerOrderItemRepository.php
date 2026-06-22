@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository;
+namespace App\Order\Infrastructure\Doctrine\Repository;
 
-use App\Entity\PartnerOrderItem;
+use App\Order\Domain\Entity\PartnerOrderItem;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

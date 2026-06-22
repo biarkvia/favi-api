@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO;
+namespace App\Order\UI\Http\DTO;
 
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,5 +21,6 @@ readonly class OrderItemDTO
 
         #[Assert\NotBlank]
         #[Assert\Positive]
-        public int $quantity) {}
+        public int $quantity,
+    ) {}
 }

@@ -2,8 +2,8 @@
 
 namespace App\Tests\Controller\Api;
 
-use App\Entity\PartnerOrder;
-use App\Entity\PartnerOrderItem;
+use App\Order\Domain\Entity\PartnerOrder;
+use App\Order\Domain\Entity\PartnerOrderItem;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -37,7 +37,10 @@ class OrderControllerTest extends WebTestCase
         self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
 
         $responseData = $this->decodeResponse();
-        self::assertSame('success', $responseData['status']);
+        self::assertArrayNotHasKey('status', $responseData);
+        self::assertIsInt($responseData['id']);
+        self::assertSame('nabytek-24', $responseData['partner_id']);
+        self::assertSame('OBJ-20260612-8457', $responseData['order_id']);
 
         $this->entityManager->clear();
         $order = $this->findOrder('nabytek-24', 'OBJ-20260612-8457');
@@ -94,6 +97,7 @@ class OrderControllerTest extends WebTestCase
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
 
         $responseData = $this->decodeResponse();
+        self::assertArrayNotHasKey('status', $responseData);
         self::assertSame('nabytek-24', $responseData['partner_id']);
         self::assertSame('OBJ-20260612-8457', $responseData['order_id']);
         self::assertSame('2026-06-28', $responseData['expected_delivery_date']);
@@ -114,8 +118,7 @@ class OrderControllerTest extends WebTestCase
 
     private function requestJson(string $method, string $uri, array $payload): void
     {
-        $content = json_encode($payload);
-        self::assertIsString($content);
+        $content = json_encode($payload, JSON_THROW_ON_ERROR);
 
         $this->client->request($method, $uri, [], [],
             [
@@ -159,7 +162,7 @@ class OrderControllerTest extends WebTestCase
 
     private function decodeResponse(): array
     {
-        $data = json_decode($this->client->getResponse()->getContent(), true);
+        $data = json_decode($this->client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR);
         self::assertIsArray($data);
 
         return $data;

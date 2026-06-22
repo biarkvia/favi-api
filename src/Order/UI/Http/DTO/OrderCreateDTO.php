@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO;
+namespace App\Order\UI\Http\DTO;
 
 use DateTimeImmutable;
 use Symfony\Component\Serializer\Annotation\SerializedName;
@@ -32,5 +32,6 @@ readonly class OrderCreateDTO
         #[Assert\Count(min: 1, minMessage: 'At least one product in the order')]
         #[Assert\All([new Assert\Type(OrderItemDTO::class)])]
         #[Assert\Valid]
-        public array $products) {}
+        public array $products,
+    ) {}
 }
